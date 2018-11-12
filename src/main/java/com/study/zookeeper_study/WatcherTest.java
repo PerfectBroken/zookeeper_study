@@ -7,7 +7,7 @@ import org.apache.zookeeper.data.Stat;
 public class WatcherTest implements Watcher {
 
     WatcherTest(){
-        
+
     }
 
     ZooKeeper zk;
