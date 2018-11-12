@@ -52,26 +52,16 @@ public class Master implements Watcher {
         return false;
     }
 
-    void runForMaster(){
-        while(true){
-            try{
-                log.info("我去竞选");
-                zk.create("/master",
-                        serverId.getBytes(),
-                        ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                        CreateMode.EPHEMERAL,
-                        masterCreateCallback,
-                        null);
-                isLeader = true;
-                if(isLeader) break;
-            }
-            catch (Exception e){
-            }
-            if(checkMaster()) break;
-            try {
-                Thread.sleep(1000);
-            }
-            catch (Exception e){}
+    void runForMaster() {
+        try {
+            log.info("我去竞选");
+            zk.create("/master",
+                    serverId.getBytes(),
+                    ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                    CreateMode.EPHEMERAL,
+                    masterCreateCallback,
+                    null);
+        } catch (Exception e) {
         }
     }
 
@@ -138,7 +128,7 @@ public class Master implements Watcher {
                     break;
                 }
                 case NODEEXISTS:{
-
+                    masterExists();
                 }
                 default:{
                     isLeader = false;
@@ -179,7 +169,7 @@ public class Master implements Watcher {
                     catch (Exception e){}
                     masterExists();
                 case OK:
-                    runForMaster();
+//                    runForMaster();
 //                    stat = MasterStates.RUNNING;
                 default:
 
